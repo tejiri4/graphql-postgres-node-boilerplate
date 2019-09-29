@@ -1,4 +1,4 @@
 // schema
-import helloTypeDefs from "./hello";
+import heroesTypeDefs from "./heroes";
 
-export default helloTypeDefs;
+export default heroesTypeDefs;

@@ -1,14 +1,52 @@
-import { expect, graphqlTestCall } from "./utils";
+import { query, expect, mutate } from "./utils";
 
 // integration testing
-describe("Hello Query", () => {
-  it("should return a string with detail Hello world!", async () => {
-    const meQuery = `
-      query helloQuery {
-        hello 
+describe("Heroes Query", () => {
+  it("should return an array of heroes", async () => {
+    const getHeroesQuery = `
+      query heroes {
+        heroes {
+          name,
+          powers
+        }
       }
     `;
-    const helloResponse = await graphqlTestCall(meQuery);
-    expect(helloResponse).to.eql({ data: { hello: 'Hello world!'}});
+
+    const expected = {
+      heroes: [
+        {
+          name: "Spiderman",
+          powers: ["Spider Sense", "Web"]
+        },
+        {
+          name: "Batman",
+          powers: null
+        }
+      ]
+    };
+
+    const { data } = await query({ query: getHeroesQuery });
+    expect(data).to.eql(expected);
+  });
+
+  it("should create a new hero", async () => {
+    const createHeroMutation = `
+      mutation addHero {
+        addHero(name: "Thor", powers: ["thunder"]) {
+          name,
+          powers
+        }
+      }
+    `;
+
+    const expected = {
+      addHero: {
+        name: "Thor",
+        powers: ["thunder"]
+      }
+    };
+
+    const { data } = await mutate({ mutation: createHeroMutation });
+    expect(data).to.eql(expected);
   });
 });

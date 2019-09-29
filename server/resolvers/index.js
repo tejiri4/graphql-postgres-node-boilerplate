@@ -1,6 +1,6 @@
 import { merge } from 'lodash';
 
 // resolver
-import helloResolver from './hello';
+import heroesResolver from './heroes';
 
-export default helloResolver;
+export default heroesResolver;
