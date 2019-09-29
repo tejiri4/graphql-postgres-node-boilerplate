@@ -1,27 +1,12 @@
+import { createTestClient }from 'apollo-server-testing';
 import chai from 'chai';
-import { graphql } from "graphql";
-import { makeExecutableSchema } from "graphql-tools";
-import typeDefs from '../schema';
-import resolvers from '../resolvers';
+import server from '../index';
 
+const { query, mutate } = createTestClient(server);
 const { expect } = chai;
 
-const schema = makeExecutableSchema({ typeDefs, resolvers });
-
-const graphqlTestCall = async (
-  query,
-  variables,
-) => {
-  return graphql(
-    schema,
-    query,
-    undefined,
-    {},
-    variables
-  );
-};
-
 export { 
-  expect, 
-  graphqlTestCall
+  query,
+  mutate,
+  expect
 };
